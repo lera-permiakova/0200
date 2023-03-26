@@ -1,24 +1,16 @@
 # 0200
+## User profile with implemented ability to add comments
 
-## Project setup
-```
-npm install
-```
+### Cross-browser compatibility
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+#### Works the same on all browsers that have a global share of more than 2% in the last three months:
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Google Chrome
+Safari
+Microsoft Edge
+Firefox
+Samsung Internet
+Opera
+Internet Explorer
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+##[Project](https://lera-permiakova.github.io/0200/)
