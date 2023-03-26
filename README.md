@@ -13,4 +13,4 @@ Samsung Internet
 Opera
 Internet Explorer
 
-##[Project](https://lera-permiakova.github.io/0200/)
+[Project](https://lera-permiakova.github.io/0200/)
