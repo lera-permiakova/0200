@@ -45,45 +45,23 @@
       <ul class="user-profile-view-reviews-list">
         <transition-group name="list">
           <li class="user-profile-view-reviews-list-item" v-for="review in visibleReviews" :key="review.id">
-            <div class="user-profile-view-reviews-list-item-head">
-              <div class="user-profile-view-reviews-list-item-head-name">{{review.name}}</div>
-              <div class="user-profile-view-reviews-list-item-head-time">{{review.time}}</div>
-            </div>
-            <div class="user-profile-view-reviews-list-item-text">{{ review.text }}</div>
+            <comment-base :review="review"/>
           </li>
         </transition-group>
       </ul>
     </div>
-    <form class="user-profile-view-add-comment"
-          @keydown.enter.ctrl.prevent="handleClickSendMessage">
-      <input class="user-profile-view-add-comment-name"
-             :class="{alert: emptyInputAlert}"
-             v-model.trim="inputName"
-             type="text"
-             @keydown.enter.exact.prevent
-             @blur="emptyInputAlert = false"
-             placeholder="Enter name"/>
-      <textarea class="user-profile-view-add-comment-text"
-                :class="{alert: emptyTextareaAlert}"
-                v-model.trim="inputComment"
-                :maxlength="1000"
-                @blur="emptyTextareaAlert = false"
-                placeholder="Enter comment"/>
-      <button
-        class="user-profile-view-add-comment-button"
-        type="button"
-        @click="handleClickSendMessage">
-        Send a message
-      </button>
-    </form>
+    <add-comment-form :comments-count="commentsCount" @onAdd="displayedCommentsCount++"/>
   </section>
 </template>
 
 <script>
+import CommentBase from '@/facades/Comment'
+import AddCommentForm from '@/components/AddCommentForm'
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'UserProfile',
+  components: { CommentBase, AddCommentForm },
   data () {
     return {
       inputName: '',
@@ -99,7 +77,7 @@ export default {
       profileInfo: 'getProfileInfo'
     }),
     commentsCount () {
-      return this.profileInfo.reviews.length
+      return +this.profileInfo.reviews.length
     },
     visibleReviews () {
       return this.showAll ? this.profileInfo.reviews : this.profileInfo.reviews.slice(0, this.displayedCommentsCount)
@@ -302,116 +280,6 @@ export default {
      &-list {
        &-item {
          padding-bottom: 16px;
-         &-head {
-           display: flex;
-           margin-bottom: 10px;
-           &-name {
-             margin-right: 8px;
-             font-weight: 700;
-             font-size: 14px;
-             line-height: 19px;
-           }
-           &-time {
-             font-size: 11px;
-             line-height: 19px;
-             color: #808080;
-           }
-         }
-         &-text {
-           position: relative;
-           padding: 10px 20px;
-           font-size: 14px;
-           line-height: 19px;
-           white-space: pre-wrap;
-           background-color: #F2FBFF;
-           border: 1px solid #C4CBCF;
-           box-shadow: 0 4px 10px rgba(128, 128, 128, .1);
-           &::before {
-             position: absolute;
-             content: '';
-             top: -10px;
-             left: 23px;
-             width: 0;
-             height: 0;
-             border-bottom: 10px solid #C4CBCF;
-             border-right: 10px solid transparent;
-           }
-           &::after {
-             position: absolute;
-             content: '';
-             left: 24px;
-             top: -7.6px;
-             width: 0;
-             height: 0;
-             border-bottom: 9px solid #F2FBFF;
-             border-right: 9px solid transparent;
-           }
-         }
-       }
-     }
-   }
-   &-add-comment {
-     padding: 22px 20px 34px;
-     display: flex;
-     flex-direction: column;
-     background-color: #F2F2F2;
-     .alert {
-       border-color: red;
-     }
-     &-name {
-       margin-bottom: 20px;
-       padding: 10px;
-       border: 1px solid #000;
-       border-radius: 1px;
-       font-family:  Arial, Avenir, Helvetica, sans-serif;
-       font-size: 14px;
-       outline: none;
-       box-sizing: border-box;
-       &:focus {
-         border-color: #0968bd;
-       }
-       &::placeholder {
-         font-size: 14px;
-       }
-     }
-     &-text {
-       height: 65px;
-       margin-bottom: 22px;
-       padding: 10px;
-       border: 1px solid #000;
-       line-height: 19px;
-       border-radius: 1px;
-       box-sizing: border-box;
-       font-family:  Arial, Avenir, Helvetica, sans-serif;
-       font-size: 14px;
-       resize: none;
-       outline: none;
-       &:focus {
-         border-color: #0968bd;
-       }
-       &::placeholder {
-         font-size: 14px;
-       }
-     }
-     &-button {
-       width: 280px;
-       margin: 0 auto;
-       padding: 12px 0;
-       font-weight: 700;
-       font-size: 16px;
-       line-height: 21px;
-       color: #333333;
-       background-color: #FDD639;
-       border: none;
-       border-radius: 23px;
-       cursor: pointer;
-       box-sizing: border-box;
-       transition: background-color .3s;
-       &:hover {
-         background-color: rgba(#FDD639, .88);
-       }
-       &:active {
-         transform: scale(.99);
        }
      }
    }
